@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Stop Watch</title>
+	<link rel="stylesheet" href="MDB/css/bootstrap.css">
+	<link rel="stylesheet" href="MDB/css/mdb.css">
+	<link rel="stylesheet" href="MDB/css/style.css">
+</head>
+<body>
+	<div class="container mt-5">
+		<div class="row">
+			<div class="col-md-5 m-auto">
+				<div class="card">
+					<div class="card-header bg-primary text-white text-center">
+						<h1>Stop Watch</h1>
+					</div>
+					<div class="card-body bg-light text-center">
+						<span id="min">00</span>
+						<span id="sec">00</span>
+						<span id="m-sec">00</span>
+						<div>
+							<button class=" btn btn-danger btn-mid" id="Start-btn">Start</button>
+							<button class=" btn btn-success btn-mid" id="Stop-btn">Stop</button>
+							<button class=" btn btn-warning btn-mid" id="Reset-btn">Reset</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+<script>
+	let minTag=document.getElementById("min");
+	let secTag=document.getElementById("sec");
+	let mSecTag=document.getElementById("m-sec");
+
+
+	let startBtn=document.getElementById("Start-btn");
+	let stopBtn=document.getElementById("Stop-btn");
+	let resetBtn=document.getElementById("Reset-btn");
+
+	let milliSeconds=0;
+	let seconds=0;
+	let minutes=0;
+
+	let interval=null;
+	let flag=false;
+
+	function startTimer()
+	{
+		milliSeconds=milliSeconds+10;
+		mSecTag.innerText=milliSeconds;
+		if(milliSeconds===1000)
+		{
+			seconds=seconds+1;
+			secTag.innerText=addZero(seconds);
+			milliSeconds=0;
+			if(seconds===60)
+			{
+				minutes=minutes+1;
+				minTag.innerText=addZero(minutes);
+				seconds=0;
+			}
+		}
+	}
+	startBtn.addEventListener('click',()=>
+	{
+		if(!flag)
+		{
+			interval=setInterval(startTimer,10);
+			flag=true;
+		}
+	});
+	stopBtn.addEventListener('click',()=>
+	{
+		clearInterval(interval);
+	});
+	resetBtn.addEventListener('click',()=>
+	{
+		clearInterval(interval);
+		minutes=0;
+		seconds=0;
+		milliSeconds=0;
+		flag=false;
+		mSecTag.innerText="00";
+		secTag.innerText="00";
+		minTag.innerText="00";
+	});
+	function addZero(time)
+		{
+			if(time>0)
+			{
+				return "0"+time;
+			}
+		}
+
+</script>
+</html>
